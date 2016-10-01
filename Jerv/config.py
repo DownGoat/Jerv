@@ -29,4 +29,6 @@ logger.addHandler(fh)
 logger.addHandler(ch)
 
 VERSION = "0.1"
-USER_AGENT = "Mozilla/5.0 (compatible; Jerv.http.client/{0})".format(VERSION)
+USER_AGENT = "Mozilla/5.0 (compatible; Jerv.http.client/{0}; +http://puse.cat/jerv.html)".format(VERSION)
+LANGUAGE = "no"
+TDLS = ["no"]

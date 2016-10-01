@@ -20,15 +20,22 @@ def drop_all():
 def init_db():
     import Jerv.models.site
     import Jerv.models.page
+    import Jerv.models.found
     Model.metadata.create_all(bind=engine)
 
 
 def fill_data():
     from Jerv.models.site import Site
     from Jerv.models.page import Page
-    a = Site("bloggurat.net")
+    a = Site("puse.cat")
     a.last_crawled = "2016-09-26 23:17:14.723317"
-    page = Page("/", 1337)
+    page = Page("/crawler/testpage.html", 1337)
     a.pages.append(page)
     db_session.add(a)
     db_session.commit()
+
+
+def fresh_start():
+    drop_all()
+    init_db()
+    fill_data()

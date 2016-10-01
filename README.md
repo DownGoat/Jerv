@@ -1,6 +1,6 @@
 
-Jerv Crawler
-############
+# Jerv Crawler
+
 The Jerv Crawler is a work in progress, it's purpose is to evaluate the SSL/TLS setup of websites. The primary 
 demographic is websites targeted towards Norwegians. This is determined by looking up the language attribute in the HTML
 returned, or if any of the Norwegian TDL's are used. The crawler does not yet respect the robots.txt file, but it it 

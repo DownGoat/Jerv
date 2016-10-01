@@ -19,13 +19,13 @@ def fill_meta(page, response, response_time):
     page.size = len(response.text)
     page.response_time = response_time
 
-    db_session.commit()
+    db_session.flush()
 
 
 def not_responding(site, page):
     site.status = -1
     page.status = -1
-    db_session.commit()
+    db_session.flush()
 
 
 def get_https_info(site, http_res):
@@ -40,7 +40,7 @@ def get_https_info(site, http_res):
     site.subjectAltName = http_res.get("subjectAltName")
     site.version = http_res.get("version")
 
-    db_session.commit()
+    db_session.flush()
 
 
 def get_page_language(soup, site):
@@ -107,7 +107,7 @@ def add_page_external(current_site, parsed_url):
         external_site.pages.append(page)
 
         db_session.add(external_site)
-        db_session.commit()
+        db_session.flush()
 
         return
 
@@ -115,7 +115,7 @@ def add_page_external(current_site, parsed_url):
     joined = parsed_url.path.encode('utf-8') + parsed_url.query.encode('utf-8')
     m.update(joined)
     page_hash = m.hexdigest()
-    page_exists = Page.query.filter(Page.site_id == external_site.id & Page.page_hash == page_hash).first()
+    page_exists = Page.query.filter(Page.site_id == external_site.id, Page.page_hash == page_hash).first()
 
     if page_exists is None:
         page = Page(build_full_path(parsed_url), page_hash)
@@ -125,7 +125,7 @@ def add_page_external(current_site, parsed_url):
     else:
         page_exists.found_on.append(Found(current_site.id))
 
-    db_session.commit()
+    db_session.flush()
 
 
 def add_page_internal(current_site, parsed_url):
@@ -140,7 +140,7 @@ def add_page_internal(current_site, parsed_url):
         page = Page(build_full_path(parsed_url), page_hash)
         current_site.pages.append(page)
 
-        db_session.commit()
+        db_session.flush()
 
 
 def process(site, page, response, response_time, https_res):
@@ -151,7 +151,7 @@ def process(site, page, response, response_time, https_res):
         return
 
     logger.debug("Page {0} Content-Type: {1}".format(response.url, response.headers.get("Content-Type")))
-    if "html" not in response.headers.get("Content-Type"):
+    if "html" not in response.headers.get("Content-Type", "None"):
         logger.debug("Not parsing, response is probably not HTML")
         return
 

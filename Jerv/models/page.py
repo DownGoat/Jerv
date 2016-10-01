@@ -1,6 +1,6 @@
 from sqlalchemy.orm import relationship
 from Jerv.database import Model
-from sqlalchemy import Column, Integer, ForeignKey, String, DateTime, Boolean
+from sqlalchemy import Column, Integer, ForeignKey, String, DateTime, Boolean, UnicodeText
 from Jerv.models.found import Found
 __author__ = 'puse'
 
@@ -14,7 +14,7 @@ class Page(Model):
     __tablename__ = "page"
     id = Column("id", Integer, primary_key=True)
     site_id = Column(Integer, ForeignKey("site.id"))
-    path = Column(String(1024))
+    path = Column(UnicodeText)
     size = Column(Integer)
     response_time = Column(Integer)
     http_status = Column(Integer)

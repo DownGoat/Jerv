@@ -20,6 +20,8 @@ def run():
                     if not page.indexed:
                         #try:
                         process(*fetch(site, page))
+                        db_session.commit()
+                        break
                         #except Exception as error:
                         #    logger.critical("Unknown Exception:")
                         #    logger.critical(error)

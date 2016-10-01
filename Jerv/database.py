@@ -27,9 +27,9 @@ def init_db():
 def fill_data():
     from Jerv.models.site import Site
     from Jerv.models.page import Page
-    a = Site("puse.cat")
+    a = Site("freak.no")
     a.last_crawled = "2016-09-26 23:17:14.723317"
-    page = Page("/crawler/testpage.html", 1337)
+    page = Page("/", 1337)
     a.pages.append(page)
     db_session.add(a)
     db_session.commit()
